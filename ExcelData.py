@@ -1,43 +1,57 @@
 from openpyxl import load_workbook
 
-try:
-    wb = load_workbook('collectionOfGrade.xlsx', data_only=True)
-except FileNotFoundError as err:
-    print('맞지 않는 파일 이름')
+class ExcelData:
 
-try:
-    ws = wb['성적표']
-except KeyError as err:
-    print('존재하지 않는 시트')
+    def __init__(self):
 
-grade = 0
+        self.grade = 0
+        self.count = 0
+        self.gradeRank = []
+        self.gradeCredit = []
 
-for i in range(1,5,1):
-    for j in range(1,3,1):
-        for row in ws.rows:
-            if row[0].value == str(i) + '학년 ' + str(j) + '학기':
-                grade+=1
-                break
+        try:
+            self.wb = load_workbook('collectionOfGrade.xlsx', data_only=True)
+        except FileNotFoundError as err:
+            print('맞지 않는 파일 이름')
 
-gradeRank = []
-gradeCredit = []
+        try:
+            self.ws = self.wb['성적표']
+        except KeyError as err:
+            print('존재하지 않는 시트')
 
-for i in range(grade):
-    line = []
-    line2 = []
-    gradeRank.append(line)
-    gradeCredit.append(line2)
+        for i in range(1,5,1):
+            for j in range(1,3,1):
+                for row in self.ws.rows:
+                    if row[0].value == str(i) + '학년 ' + str(j) + '학기':
+                        self.grade+=1
+                        break
 
-count = 0
+        for i in range(self.grade):
+            line = []
+            line2 = []
+            self.gradeRank.append(line)
+            self.gradeCredit.append(line2)
 
-for i in range(1,5,1):
-    for j in range(1,3,1):
-        for row in ws.rows:
-            if row[0].value == str(i) + '학년 ' + str(j) + '학기':
-                gradeRank[count].append(row[4].value)
-                gradeCredit[count].append(row[2].value)
-        count += 1
+    def getRank(self):
+        self.count = 0
+        for i in range(1,5,1):
+            for j in range(1,3,1):
+                for row in self.ws.rows:
+                    if row[0].value == str(i) + '학년 ' + str(j) + '학기':
+                        self.gradeRank[self.count].append(row[4].value)
+                self.count += 1
 
-for i in range(grade):
-    print(gradeRank[i])
-    print(gradeCredit[i])
+        for i in range(self.grade):
+            print(self.gradeRank[i])
+
+    def getCredit(self):
+        self.count = 0
+        for i in range(1,5,1):
+            for j in range(1,3,1):
+                for row in self.ws.rows:
+                    if row[0].value == str(i) + '학년 ' + str(j) + '학기':
+                        self.gradeCredit[self.count].append(row[2].value)
+                self.count += 1
+
+        for i in range(self.grade):
+            print(self.gradeCredit[i])

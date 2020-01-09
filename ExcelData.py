@@ -8,6 +8,7 @@ class ExcelData:
         self.count = 0
         self.gradeRank = []
         self.gradeCredit = []
+        self.gradeName = []
 
         try:
             self.wb = load_workbook('collectionOfGrade.xlsx', data_only=True)
@@ -29,8 +30,10 @@ class ExcelData:
         for i in range(self.grade):
             line = []
             line2 = []
+            line3 = []
             self.gradeRank.append(line)
             self.gradeCredit.append(line2)
+            self.gradeName.append(line3)
 
     def getRank(self):
         self.count = 0
@@ -41,8 +44,7 @@ class ExcelData:
                         self.gradeRank[self.count].append(row[4].value)
                 self.count += 1
 
-        for i in range(self.grade):
-            print(self.gradeRank[i])
+        return self.gradeRank
 
     def getCredit(self):
         self.count = 0
@@ -53,5 +55,19 @@ class ExcelData:
                         self.gradeCredit[self.count].append(row[2].value)
                 self.count += 1
 
-        for i in range(self.grade):
-            print(self.gradeCredit[i])
+        return self.gradeCredit
+
+    def getCourseName(self):
+        self.count = 0
+        for i in range(1,5,1):
+            for j in range(1,3,1):
+                for row in self.ws.rows:
+                    if row[0].value == str(i) + '학년 ' + str(j) + '학기':
+                        self.gradeName[self.count].append(row[3].value)
+                self.count += 1
+
+        return self.gradeName
+
+    def getGradeCount(self):
+
+        return self.grade

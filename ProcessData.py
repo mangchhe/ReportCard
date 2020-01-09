@@ -6,3 +6,4 @@ if __name__ == '__main__':
 
     excelData.getRank()
     excelData.getCredit()
+    excelData.getCourseName()

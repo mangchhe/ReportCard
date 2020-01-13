@@ -6,9 +6,12 @@ class ExcelData:
 
         self.grade = 0
         self.count = 0
+        self.is_check = 0
+        self.is_check2 = 0
+        self.is_check3 = 0
         self.gradeRank = []
-        self.gradeCredit = []
         self.gradeName = []
+        self.courseRank = []
 
         try:
             self.wb = load_workbook('collectionOfGrade.xlsx', data_only=True)
@@ -32,41 +35,47 @@ class ExcelData:
             line2 = []
             line3 = []
             self.gradeRank.append(line)
-            self.gradeCredit.append(line2)
-            self.gradeName.append(line3)
+            self.gradeName.append(line2)
+            self.courseRank.append(line3)
 
     def getRank(self):
-        self.count = 0
-        for i in range(1,5,1):
-            for j in range(1,3,1):
-                for row in self.ws.rows:
-                    if row[0].value == str(i) + '학년 ' + str(j) + '학기':
-                        self.gradeRank[self.count].append(row[4].value)
-                self.count += 1
+        if self.is_check == 0:
+            self.count = 0
+            if self.gradeRank is not -1:
+                for i in range(1,5,1):
+                    for j in range(1,3,1):
+                        for row in self.ws.rows:
+                            if row[0].value == str(i) + '학년 ' + str(j) + '학기':
+                                self.gradeRank[self.count].append(row[4].value)
+                        self.count += 1
+            self.is_check = 1
 
         return self.gradeRank
 
-    def getCredit(self):
-        self.count = 0
-        for i in range(1,5,1):
-            for j in range(1,3,1):
-                for row in self.ws.rows:
-                    if row[0].value == str(i) + '학년 ' + str(j) + '학기':
-                        self.gradeCredit[self.count].append(row[2].value)
-                self.count += 1
-
-        return self.gradeCredit
-
     def getCourseName(self):
-        self.count = 0
-        for i in range(1,5,1):
-            for j in range(1,3,1):
-                for row in self.ws.rows:
-                    if row[0].value == str(i) + '학년 ' + str(j) + '학기':
-                        self.gradeName[self.count].append(row[3].value)
-                self.count += 1
-
+        if self.is_check2 == 0:
+            self.count = 0
+            for i in range(1,5,1):
+                for j in range(1,3,1):
+                    for row in self.ws.rows:
+                        if row[0].value == str(i) + '학년 ' + str(j) + '학기':
+                            self.gradeName[self.count].append(row[3].value)
+                    self.count += 1
+            self.is_check2 = 1
         return self.gradeName
+
+    def getCourseRank(self):
+        if self.is_check3 == 0:
+            self.count = 0
+            for i in range(1,5,1):
+                for j in range(1,3,1):
+                    for row in self.ws.rows:
+                        if row[0].value == str(i) + '학년 ' + str(j) + '학기':
+                            self.courseRank[self.count].append(row[2].value)
+                    self.count += 1
+        self.is_check3 = 1
+
+        return self.courseRank
 
     def getGradeCount(self):
 

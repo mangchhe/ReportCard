@@ -11,12 +11,15 @@ class ProcessData:
         selectGrade = semester
 
         tempGradeName = self.excelData.getCourseName()[selectGrade]
-
         valueKo = []
+        tempCourseRank = self.excelData.getCourseRank()[selectGrade]
+        valueKo2 = []
 
         for i in self.excelData.getRank()[selectGrade]:
             valueKo.append(tempGradeName[0])
             del tempGradeName[0]
+            valueKo2.append(tempCourseRank[0])
+            del tempCourseRank[0]
 
             if i == 'A+':
                 gradeRank.append(4.5)
@@ -38,6 +41,7 @@ class ProcessData:
                 gradeRank.append(0.0)
             elif i == 'P':
                 del valueKo[-1]
+                del valueKo2[-1]
                 pass
             else:
                 pass
@@ -48,8 +52,3 @@ class ProcessData:
             sum += gradeRank.pop()
 
         return round(sum/gradeRankNum,2)
-
-processData = ProcessData()
-for i in range(0,6,1):
-    print(processData.getAvg(i))
-

@@ -27,8 +27,8 @@ if __name__ == '__main__':
     processData = ProcessData()
 
     zum = []
-    gradeCount = excelData.getGradeCount()
-    for i in range(gradeCount):
+    gradeCount = excelData.getGradeCount()  # 총 이수 학기 획득
+    for i in range(gradeCount): # 이수 학기 만큼 평균 학점 계산
         zum.append(processData.getAvg(i))
 
     plt.plot(zum, ls=":", marker="o", mec="b", mfc="b")

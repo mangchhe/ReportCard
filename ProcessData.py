@@ -1,11 +1,11 @@
 from ExcelData import ExcelData
 
-class ProcessData:
+class ProcessData:  # 엑셀 값 받아와 가공하는 클래스
 
     def __init__(self):
         self.excelData = ExcelData()
 
-    def getAvg(self, semester):
+    def getAvg(self, semester): # 평균값 반환
 
         gradeRank = []
         selectGrade = semester
@@ -15,13 +15,13 @@ class ProcessData:
         tempCourseRank = self.excelData.getCourseRank()[selectGrade]
         valueKo2 = []
 
-        for i in self.excelData.getRank()[selectGrade]:
+        for i in self.excelData.getRank()[selectGrade]: # 한 학기에 존재하는 강의 개수만큼 반복
             valueKo.append(tempGradeName[0])
             del tempGradeName[0]
             valueKo2.append(tempCourseRank[0])
             del tempCourseRank[0]
 
-            if i == 'A+':
+            if i == 'A+':               # 각 학점 점수로 변환
                 gradeRank.append(4.5)
             elif i == 'A0':
                 gradeRank.append(4.0)
@@ -47,8 +47,12 @@ class ProcessData:
                 pass
 
         sum = 0
+        sumCount = 0
         gradeRankNum = len(gradeRank)
-        for i in range(gradeRankNum):
-            sum += gradeRank.pop()
+        for i in range(len(valueKo2)):  # 총 이수 학점 계산
+            sumCount += valueKo2[i]
 
-        return round(sum/gradeRankNum,2)
+        for i in range(gradeRankNum):   # 평균 학점 계산
+            sum += gradeRank.pop() * valueKo2.pop()
+
+        return round(sum/sumCount,2)    # 평균 학점 반환

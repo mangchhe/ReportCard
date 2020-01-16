@@ -2,6 +2,7 @@ import matplotlib as mpl
 import matplotlib.pylab as plt
 from ExcelData import ExcelData
 from ProcessData import ProcessData
+from ViewOneGrade import ViewOneGrade
 
 #mpl.rc('font', family='Hancom Gothic')
 #mpl.rc('axes', unicode_minus=False)
@@ -15,13 +16,14 @@ plt.rcParams['font.size'] = 8                   # 크기 설정
 
 excelData = ExcelData()
 processData = ProcessData()
+viewOneGrade = ViewOneGrade()
 
 zum = []
 
 def onclick(event):
     for i in range(excelData.getGradeCount()):
         if (event.xdata < i + 0.1 and event.xdata > i - 0.1) and (event.ydata < zum[i] + 0.1 and event.ydata > zum[i] - 0.1):
-            print(i)
+            viewOneGrade.getGradeGraph(i)
 
 
 if __name__ == '__main__':

@@ -5,6 +5,8 @@ class ProcessData:  # 엑셀 값 받아와 가공하는 클래스
     def __init__(self):
         self.excelData = ExcelData()
 
+        self.count = 0
+
     def getAvg(self, semester): # 평균값 반환
 
         gradeRank = []
@@ -16,10 +18,10 @@ class ProcessData:  # 엑셀 값 받아와 가공하는 클래스
         valueKo2 = []
 
         for i in self.excelData.getRank()[selectGrade]: # 한 학기에 존재하는 강의 개수만큼 반복
-            valueKo.append(tempGradeName[0])
-            del tempGradeName[0]
-            valueKo2.append(tempCourseRank[0])
-            del tempCourseRank[0]
+            valueKo.append(tempGradeName[self.count])
+            valueKo2.append(tempCourseRank[self.count])
+
+            self.count += 1
 
             if i == 'A+':               # 각 학점 점수로 변환
                 gradeRank.append(4.5)
@@ -45,6 +47,8 @@ class ProcessData:  # 엑셀 값 받아와 가공하는 클래스
                 pass
             else:
                 pass
+
+        self.count = 0
 
         sum = 0
         sumCount = 0

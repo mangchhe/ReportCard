@@ -9,6 +9,7 @@ class ViewOneGrade:
         self.gradeRank = []
         self.valueKo = []
         self.selectGrade = 0
+        self.count = 0
 
     def getGradeGraph(self, gradeNum):
 
@@ -20,8 +21,8 @@ class ViewOneGrade:
         tempGradeName = self.excelData.getCourseName()[self.selectGrade]
 
         for i in self.excelData.getRank()[self.selectGrade]:
-            self.valueKo.append(tempGradeName[0])
-            del tempGradeName[0]
+            self.valueKo.append(tempGradeName[self.count])
+            self.count += 1
 
             if i=='A+':
                 self.gradeRank.append(4.5)
@@ -47,6 +48,7 @@ class ViewOneGrade:
             else:
                 pass
 
+        self.count = 0
 
         font1 = {'family' : 'Hancom Gothic', 'size' : 14, 'color' : 'blue'}
         font2 = {'family' : 'Hancom Gothic', 'size' : 14, 'color' : 'blue'}
